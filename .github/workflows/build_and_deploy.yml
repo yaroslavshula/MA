@@ -8,30 +8,30 @@ on:
   workflow_dispatch:
 
 jobs:
-#  test:
-#    name: Run tests
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v3
-#
-#      - name: install dependencies
-#        run: |
-#          sudo apt update
-#          sudo apt install -y python3-pip
-#          pip install psycopg2-binary
-#          pip install pytest
-#
-#      - name: Prepare for tests (compose up)
-#        run: docker compose up -d --build
-#
-#      - name: Run integration test
-#        run: python tests/integration.py
-#
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y python3-pip
+          pip install psycopg2-binary
+          pip install pytest
+
+      - name: Prepare for tests (compose up)
+        run: docker compose up -d --build
+
+      - name: Run integration test
+        run: python test/integration.py
+
 #      - name: Run component test
 #        run: python tests/component.py
-#
-#      - name: Clean up (compose down)
-#        run: docker compose down
+
+      - name: Clean up (compose down)
+        run: docker compose down
 
   build_and_push_theater_service:
     name: Build and push theater service to Yandex Cloud
@@ -69,7 +69,7 @@ jobs:
           revision-image-url: cr.yandex/${{ secrets.YC_REGISTRY_ID }}/ms-theater-services:latest
           revision-service-account-id: ${{ secrets.YC_SA_ID }}
 
-  build_and_push_ticket_service:
+  build_and_push_tickets_service:
     name: Build and push tickets service to DockerHub
     runs-on: ubuntu-latest
 #    needs: [ test ]
