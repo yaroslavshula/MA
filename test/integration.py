@@ -9,11 +9,11 @@ tickets_service = "http://localhost:8001"
 class TestIntegration(unittest.TestCase):
 
     def test_station_service_connection(self):
-        r = requests.get(f"{theater_service}/healthCheck")
+        r = requests.get(f"{theater_service}/healthCheck", verify=False)
         self.assertEqual(r.status_code, 200)
 
     def test_ticket_service_connection(self):
-        r = requests.get(f"{tickets_service}/healthCheck")
+        r = requests.get(f"{tickets_service}/healthCheck", verify=False)
         self.assertEqual(r.status_code, 200)
 
     def test_get_show(self):
