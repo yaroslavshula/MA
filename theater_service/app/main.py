@@ -26,7 +26,7 @@ async def fetch_shows():
     return db
 
 @app.get("/get_show_by_id")
-async def get_train_by_id(show_id: int):
+async def get_show_by_id(show_id: int):
     for show in db:
         if show.id == show_id:
             return show
