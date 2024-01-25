@@ -76,8 +76,8 @@ async def get_tickets_by_show(show_id: int):
 
 
 if __name__ == "__main__":
-    th = Thread(target=get_shows)
-    th.start()
+    # th = Thread(target=get_shows)
+    # th.start()
     uvicorn.run(app, host="0.0.0.0", port=int(os.getenv('PORT', 80)))
 
 
