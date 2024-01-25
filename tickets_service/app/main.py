@@ -8,9 +8,7 @@ from datetime import datetime
 from uuid import UUID
 from model.ticket import Ticket, TicketStatus
 import pika
-import json
-import aio_pika
-import asyncio
+from threading import Thread
 
 app = FastAPI()
 
@@ -39,65 +37,47 @@ def callback(ch, method, properties, body):
             ))
     except ValueError:
         print('Value Error')
+    channel.basic_ack(delivery_tag=method.delivery_tag)
 
-async def start_consumer_async():
-    url = "amqps://hhouuwcj:whH-ZWJiQ1qCWcOdoX4PFxFhtooS_sIj@cow.rmq2.cloudamqp.com/hhouuwcj"
-
-    async with aio_pika.connect_robust(url) as connection:
-        channel = await connection.channel()
-
-        queue_name = "shows"
-        await channel.declare_queue(queue_name, durable=True)
-        await channel.set_qos(prefetch_count=1)
-
-        await channel.consume(
-            callback,
-            queue_name=queue_name
-        )
-
-        while True:
-            await asyncio.sleep(1)
+# RabbitMQ
+url = "amqps://hhouuwcj:whH-ZWJiQ1qCWcOdoX4PFxFhtooS_sIj@cow.rmq2.cloudamqp.com/hhouuwcj"
+params = pika.URLParameters(url)
+connection = pika.BlockingConnection(params)
+channel = connection.channel()
+queue_name = "shows"
+channel.queue_declare(queue=queue_name, durable=True)
+channel.basic_qos(prefetch_count=1)
+channel.basic_consume(queue=queue_name, on_message_callback=callback)
 
 @app.get("/healthCheck", status_code=status.HTTP_200_OK)
 async def service_alive():
     return {'message': 'service alive'}
 
+def get_shows():
+    channel.start_consuming()
+    return {'message': 'done'}
 
 @app.get("/ticketList")
 async def fetch_tickets():
     return db
 
 
-# @app.get("/get_show_by_id")
-# async def get_train_by_id(show_id: int):
-#     for show in db:
-#         if show.id == show_id:
-#             return show
-#     raise HTTPException(
-#         status_code=404,
-#         detail=f'train with {show_id} does not exist'
-#     )
-#
-#
-#
-# @app.delete("/delele_show/{show_id}")
-# async def delete_show(show_id: int):
-#     for show in db:
-#         if show.id == show_id:
-#             db.remove(show)
-#             return
-#     raise HTTPException(
-#         status_code=404,
-#         detail=f'train with {show_id} does not exist'
-#     )
-#
-
-async def main():
-    # Запуск консьюмера и FastAPI параллельно
-    await asyncio.gather(
-        start_consumer_async(),
-
+@app.get("/get_ticket_by_show")
+async def get_tickets_by_show(show_id: int):
+    res = []
+    for show in db:
+        if show.id == show_id:
+            res.append(show)
+    return res
+    raise HTTPException(
+        status_code=404,
+        detail=f'train with {show_id} does not exist'
     )
 
+
 if __name__ == "__main__":
+    th = Thread(target=get_shows)
+    th.start()
     uvicorn.run(app, host="0.0.0.0", port=int(os.getenv('PORT', 80)))
+
+

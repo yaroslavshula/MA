@@ -1,11 +1,9 @@
 import os
 import uvicorn
-from fastapi import FastAPI, Depends, HTTPException, status
-from pydantic import BaseModel
-from typing import List, Annotated
+from fastapi import FastAPI,  HTTPException, status
+from typing import List
 from model.show import Show
 import pika
-import json
 
 app = FastAPI()
 
@@ -50,7 +48,7 @@ async def add_show(show: Show):
 
     channel.basic_publish(exchange='',
                           routing_key=queue_name,
-                          body="test",
+                          body=str(show.id),
                           properties=pika.BasicProperties(delivery_mode=pika.spec.PERSISTENT_DELIVERY_MODE))
 
     print(f" [x] Sent 'Create Show': {show.id}")
