@@ -23,8 +23,8 @@ jobs:
       - name: Prepare for tests (compose up)
         run: docker compose up -d --build
 
-#      - name: Run integration test
-#        run: python test/integration.py
+      - name: Run integration test
+        run: python test/integration.py
 
       - name: Run component test
         run: python test/component.py
