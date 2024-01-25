@@ -27,7 +27,7 @@ jobs:
 #        run: python test/integration.py
 
       - name: Run component test
-        run: python tests/component.py
+        run: python test/component.py
 
       - name: Clean up (compose down)
         run: docker compose down
