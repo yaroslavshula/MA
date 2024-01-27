@@ -71,13 +71,13 @@ async def get_tickets_by_show(show_id: int):
     return res
     raise HTTPException(
         status_code=404,
-        detail=f'train with {show_id} does not exist'
+        detail=f'show with {show_id} does not exist'
     )
 
 
 if __name__ == "__main__":
-    # th = Thread(target=get_shows)
-    # th.start()
+    th = Thread(target=get_shows)
+    th.start()
     uvicorn.run(app, host="0.0.0.0", port=int(os.getenv('PORT', 80)))
 
 
