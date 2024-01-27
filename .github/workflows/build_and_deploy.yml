@@ -23,6 +23,9 @@ jobs:
       - name: Prepare for tests (compose up)
         run: docker compose up -d --build
 
+      - name: Wait for services to be ready
+        run: sleep 10
+
 #      - name: Run component test
 #        run: python test/component.py
 
