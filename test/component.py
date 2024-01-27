@@ -9,7 +9,7 @@ get_show_by_id_url = f"{theater_url}/get_show_by_id"
 
 
 show_data = {
-    "id": 1,
+    "id": 3,
     "type": "comedy",
     "theater_id": 4
 }
@@ -18,9 +18,9 @@ class TestIntegration(unittest.TestCase):
 
     def test_show_get(self):
         requests.post(add_show_url, json=show_data)
-        res = requests.get(f"{get_show_by_id_url}?show_id=1")
+        res = requests.get(f"{get_show_by_id_url}?show_id=3")
         res = json.loads(res.text)
-        self.assertEqual(res['id'], )
+        self.assertEqual(res['id'], 3)
         self.assertEqual(res['type'], 'comedy')
         self.assertEqual(res['theater_id'], 4)
 

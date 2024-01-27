@@ -37,7 +37,7 @@ async def get_show_by_id(show_id: int):
 
 @app.post("/add_show")
 async def add_show(show: Show):
-    db.append(Show)
+    db.append(show)
     url = "amqps://hhouuwcj:whH-ZWJiQ1qCWcOdoX4PFxFhtooS_sIj@cow.rmq2.cloudamqp.com/hhouuwcj"
     params = pika.URLParameters(url)
     connection = pika.BlockingConnection(params)
