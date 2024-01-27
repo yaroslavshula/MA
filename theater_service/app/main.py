@@ -60,7 +60,7 @@ async def delete_show(show_id: int):
     for show in db:
         if show.id == show_id:
             db.remove(show)
-            return
+            return "deleted"
     raise HTTPException(
         status_code=404,
         detail=f'train with {show_id} does not exist'
