@@ -13,6 +13,8 @@ show_data = {
     "theater_id": 4
 }
 
+r = requests.get(f"{theater_url}/healthCheck", verify=False)
+r = requests.get(f"{tickets_url}/healthCheck", verify=False)
 
 def test_show_get():
     pytest.assume(requests.post(add_show_url, json=show_data) == 200)
