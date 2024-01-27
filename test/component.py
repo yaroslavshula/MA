@@ -8,6 +8,7 @@ tickets_url = 'https://localhost:8001'
 add_show_url = f"{theater_url}/add_show"
 get_show_by_id_url = f"{theater_url}/get_show_by_id"
 
+
 show_data = {
     "id": 1,
     "type": "comedy",
