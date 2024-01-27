@@ -1,5 +1,6 @@
 import requests
 import unittest
+import json
 
 theater_url = 'http://localhost:8000'
 tickets_url = 'http://localhost:8001'
@@ -18,6 +19,7 @@ class TestIntegration(unittest.TestCase):
     def test_show_get(self):
         requests.post(add_show_url, json=show_data)
         res = requests.get(f"{get_show_by_id_url}/{show_data['id']}")
+        res = json.loads(res.text)
         self.assertEqual(res['id'], )
         self.assertEqual(res['type'], 'comedy')
         self.assertEqual(res['theater_id'], 4)

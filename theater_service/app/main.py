@@ -55,7 +55,7 @@ async def add_show(show: Show):
     connection.close()
     return {"id": show.id}
 
-@app.delete("/delele_show/{show_id}")
+@app.delete("/delete_show/{show_id}")
 async def delete_show(show_id: int):
     for show in db:
         if show.id == show_id:
