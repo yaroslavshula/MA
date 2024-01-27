@@ -1,6 +1,4 @@
 import requests
-from uuid import UUID, uuid4
-from datetime import datetime
 import pytest
 
 theater_url = 'https://localhost:8000'
