@@ -6,13 +6,14 @@ theater_url = 'http://localhost:8000'
 tickets_url = 'http://localhost:8001'
 add_show_url = f"{theater_url}/add_show"
 get_show_by_id_url = f"{theater_url}/get_show_by_id"
-
+delete_show_url = f"{theater_url}/delete_show"
 
 show_data = {
     "id": 3,
     "type": "comedy",
     "theater_id": 4
 }
+
 
 class TestIntegration(unittest.TestCase):
 
@@ -25,8 +26,9 @@ class TestIntegration(unittest.TestCase):
         self.assertEqual(res['theater_id'], 4)
 
     def test_delete_show(self):
-        res = requests.delete(f"{theater_url}?show_id=3")
+        res = requests.delete(f"{delete_show_url}?show_id=2")
         self.assertEqual(res, "deleted")
+
 
 if __name__ == '__main__':
     unittest.main()
