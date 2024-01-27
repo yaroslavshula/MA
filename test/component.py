@@ -25,7 +25,7 @@ class TestIntegration(unittest.TestCase):
         self.assertEqual(res['theater_id'], 4)
 
     def test_delete_show(self):
-        res = requests.delete(f"{theater_url}")
+        res = requests.delete(f"{theater_url}?show_id=3")
         self.assertEqual(res, "deleted")
 
 if __name__ == '__main__':
