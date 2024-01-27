@@ -1,8 +1,8 @@
 import requests
 import pytest
 
-theater_url = 'https://localhost:8000'
-tickets_url = 'https://localhost:8001'
+theater_url = 'http://localhost:8000'
+tickets_url = 'http://localhost:8001'
 add_show_url = f"{theater_url}/add_show"
 get_show_by_id_url = f"{theater_url}/get_show_by_id"
 
