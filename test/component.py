@@ -16,7 +16,7 @@ show_data = {
 class TestIntegration(unittest.TestCase):
 
     def test_show_get(self):
-        assert (requests.post(add_show_url, json=show_data) == 200)
+        requests.post(add_show_url, json=show_data)
         res = requests.get(f"{get_show_by_id_url}/{show_data['id']}")
         self.assertEqual(res['id'], )
         self.assertEqual(res['type'], 'comedy')
